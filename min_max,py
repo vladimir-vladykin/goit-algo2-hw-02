@@ -1,0 +1,41 @@
+def find_min_max(array: list[int]) -> tuple[int, int]:
+    array_length = len(array)
+    if array_length == 0:
+        return 0, 0
+    if array_length == 1:
+        return array[0], array[0]
+    if array_length == 2:
+        left = array[0]
+        right = array[1]
+        return min(left, right), max(left, right)
+    
+    # array has more 3+ items, let's divide it into two sub arrays
+    # and calculated each min/max 
+    mid = array_length // 2
+    left_array = array[:mid]
+    right_array = array[mid:]
+
+    left_min, left_max = find_min_max(left_array)
+    right_min, right_max = find_min_max(right_array)
+
+    return min(left_min, right_min), max(left_max, right_max)
+
+
+def test_min_max():
+    test_array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    test_array([2, 5, 1, 7, 4, 6, 7, 12, 5])
+    test_array([-1, 12, 16, -20, 50, 15])
+    test_array([])
+    test_array([1])
+    test_array([1, 2])
+    test_array([10, 10, 10, 10, 10, 10])
+
+def test_array(array: list[list]) -> tuple[int, int]:
+    min, max = find_min_max(array)
+    print(f"For list {array}")
+    print(f"Min {min}, max {max}")
+    print("\n")
+
+
+if __name__ == "__main__":
+    test_min_max()
